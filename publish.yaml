@@ -2,7 +2,7 @@ Type: Component
 Name: egg
 Provider:
   - Alibaba
-Version: 0.0.25
+Version: 0.0.27
 Description: 阿里云Egg.JS组件，帮助您快速部署Egg.JS项目
 HomePage: https://www.aliyun.com/
 Tags:
@@ -415,6 +415,11 @@ Properties:
                       - Number
                   Start:
                     Description: 启动指令
+                    Required: false
+                    Type:
+                      - String
+                  Path:
+                    Description: Bootstrap地址
                     Required: false
                     Type:
                       - String
