@@ -1,0 +1,421 @@
+Type: Component
+Name: egg
+Provider:
+  - Alibaba
+Version: 0.0.25
+Description: 阿里云Egg.JS组件，帮助您快速部署Egg.JS项目
+HomePage: https://www.aliyun.com/
+Tags:
+  - 函数计算
+Category: 基础云服务
+Commands:
+  deploy: 部署Egg.JS项目
+  remove: 移除项目
+Service:
+  函数计算:
+    Runtime: Other
+    Authorities:
+      - 创建函数
+      - 删除函数
+Properties:
+  Region:
+    Description: 地域
+    Required: true
+    Type:
+      - Enum:
+          - cn-beijing
+          - cn-hangzhou
+          - cn-shanghai
+          - cn-qingdao
+          - cn-zhangjiakou
+          - cn-huhehaote
+          - cn-shenzhen
+          - cn-chengdu
+          - cn-hongkong
+          - ap-southeast-1
+          - ap-southeast-2
+          - ap-southeast-3
+          - ap-southeast-5
+          - ap-northeast-1
+          - eu-central-1
+          - eu-west-1
+          - us-west-1
+          - us-east-1
+          - ap-south-1
+          - cn-zhangjiakou-na62-a01
+  Log:
+    Required: false
+    Description: log配置，function产生的log会写入这里配置的logstore
+    Type:
+      - Struct:
+          LogStore:
+            Required: false
+            Description: loghub中的logstore名称
+            Type:
+              - String
+          Project:
+            Required: false
+            Description: loghub中的project名称
+            Type:
+              - String
+  CodeUri:
+    Required: false
+    Default: ./
+    Description: 代码位置
+    Type:
+      - String
+      - Struct:
+          Bucket:
+            Required: false
+            Description: function code包的bucket name
+            Type:
+              - String
+          Object:
+            Required: false
+            Description: code zip包的object name
+            Type:
+              - String
+          Exclude:
+            Required: false
+            Description: 除去路径
+            Type:
+              - <String>List
+          Include:
+            Required: false
+            Description: 包括路径
+            Type:
+              - <String>List
+      - Struct:
+          Bucket:
+            Required: false
+            Description: function code包的bucket name
+            Type:
+              - String
+          Src:
+            Required: false
+            Description: 本地路径
+            Type:
+              - String
+          Exclude:
+            Required: false
+            Description: 除去路径
+            Type:
+              - <String>List
+          Include:
+            Required: false
+            Description: 包括路径
+            Type:
+              - <String>List
+  Environment:
+    Required: false
+    Description: 环境变量
+    Example: 'key: value'
+    Type:
+      - Struct
+  Domains:
+    Required: false
+    Description: 自定义域名配置。
+    Type:
+      - Struct:
+          Domain:
+            equired: true
+            Description: 域名
+            Type:
+              - String
+      - <Struct>List:
+          Domain:
+            equired: true
+            Description: 域名
+            Type:
+              - String
+          Protocol:
+            Required: true
+            Description: 协议
+            Type:
+              - <Enum>List:
+                  - HTTP
+                  - HTTPS
+          CertConfig:
+            Required: false
+            Description: 域名证书
+            Type:
+              - Struct:
+                  CertName:
+                    Required: false
+                    Description: 名称
+                    Type:
+                      - String
+                  PrivateKey:
+                    Required: false
+                    Description: 表示私钥
+                    Type:
+                      - String
+                  Certificate:
+                    Required: false
+                    Description: 表示证书
+                    Type:
+                      - String
+          Routes:
+            Required: false
+            Description: 路径配置。
+            Type:
+              - <Struct>List:
+                  Path:
+                    Required: false
+                    Description: 路径
+                    Type:
+                      - String
+                  Qualifier:
+                    Required: false
+                    Description: service 版本。
+                    Example: LATEST
+                    Type:
+                      - String
+  Detail:
+    Description: 详细配置
+    Required: false
+    Type:
+      - Struct:
+          Service:
+            Description: 服务
+            Required: false
+            Type:
+              - Struct:
+                  Name:
+                    Required: false
+                    Description: service名称
+                    Type:
+                      - String
+                  Description:
+                    Required: false
+                    Description: service的简短描述
+                    Type:
+                      - String
+                  InternetAccess:
+                    Required: false
+                    Description: 设为true让function可以访问公网
+                    Type:
+                      - Boolean
+                  Role:
+                    Required: false
+                    Description: 授予函数计算所需权限的RAM role, 使用场景包含 1. 把 function产生的 log 发送到用户的 logstore 中 2. 为function 在执行中访问其它云资源生成 token
+                    Example: "acs:ram::1234567890:role/fc-test"
+                    Type:
+                      - String
+                  Vpc:
+                    Required: false
+                    Description: vpc配置, 配置后function可以访问指定VPC
+                    Type:
+                      - Struct:
+                          SecurityGroupId:
+                            Required: false
+                            Description: 安全组ID
+                            Type:
+                              - String
+                          VSwitchIds:
+                            Required: false
+                            Description: 一个或多个VSwitch ID
+                            Type:
+                              - <String>List
+                          VpcId:
+                            Required: false
+                            Description: VPC ID
+                            Type:
+                              - String
+                  Nas:
+                    Required: false
+                    Description: NAS配置, 配置后function可以访问指定NAS
+                    Type:
+                      - Struct:
+                          UserId:
+                            Required: false
+                            Description: userID
+                            Type:
+                              - String
+                          GroupId:
+                            Required: false
+                            Description: groupID
+                            Type:
+                              - String
+                          MountPoints:
+                            Required: false
+                            Description: 挂载点
+                            Type:
+                              - <Struct>List:
+                                  ServerAddr:
+                                    Required: false
+                                    Description: NAS 服务器地址
+                                    Type:
+                                      - String
+                                  MountDir:
+                                    Required: false
+                                    Description: 本地挂载目录
+                                    Type:
+                                      - String
+                  Tag:
+                    Required: false
+                    Description: 标签内容
+                    Type:
+                      - <Struct>List:
+                          Key:
+                            Required: false
+                            Description: 标签名
+                            Type:
+                              - String
+                          Value:
+                            Required: false
+                            Description: 标签值
+                            Type:
+                              - String
+          Function:
+            Description: 函数
+            Required: false
+            Type:
+              - Struct:
+                  Name:
+                    Required: true
+                    Description: function名称
+                    Type:
+                      - String
+                  Description:
+                    Required: false
+                    Description: function的简短描述
+                    Type:
+                      - String
+                  MemorySize:
+                    Required: false
+                    Default: 512
+                    Description: function的内存规格
+                    Type:
+                      - String
+                  Timeout:
+                    Required: false
+                    Default: 60
+                    Description: function运行的超时时间
+                    Type:
+                      - String
+                  Triggers:
+                    Required: false
+                    Description: 触发器
+                    Type:
+                      - <Struct>List:
+                          Name:
+                            Required: true
+                            Description: 触发器名称
+                            Type:
+                              - String
+                          Parameters:
+                            Required: true
+                            Description: 参数内容
+                            Type:
+                              - Struct:
+                                  AuthType:
+                                    Required: true
+                                    Description:  鉴权类型，可选值：ANONYMOUS、FUNCTION。
+                                    Type:
+                                      - <Enum>List:
+                                          - ANONYMOUS
+                                          - FUNCTION
+                                  Methods:
+                                    Required: true
+                                    Description:  HTTP 触发器支持的访问方法.
+                                    Type:
+                                      - <Enum>List:
+                                          - GET
+                                          - POST
+                                          - PUT
+                                          - DELETE
+                                          - HEAD
+                                  Domains:
+                                    Required: false
+                                    Description: 自定义域名配置。
+                                    Type:
+                                      - Struct:
+                                          Domain:
+                                            equired: true
+                                            Description: 域名
+                                            Type:
+                                              - String
+                                      - <Struct>List:
+                                          Domain:
+                                            equired: true
+                                            Description: 域名
+                                            Type:
+                                              - String
+                                          Protocol:
+                                            Required: true
+                                            Description: 协议
+                                            Type:
+                                              - <Enum>List:
+                                                  - HTTP
+                                                  - HTTPS
+                                          CertConfig:
+                                            Required: false
+                                            Description: 域名证书
+                                            Type:
+                                              - Struct:
+                                                  CertName:
+                                                    Required: false
+                                                    Description: 名称
+                                                    Type:
+                                                      - String
+                                                  PrivateKey:
+                                                    Required: false
+                                                    Description: 表示私钥
+                                                    Type:
+                                                      - String
+                                                  Certificate:
+                                                    Required: false
+                                                    Description: 表示证书
+                                                    Type:
+                                                      - String
+                                          Routes:
+                                            Required: false
+                                            Description: 路径配置。
+                                            Type:
+                                              - <Struct>List:
+                                                  Path:
+                                                    Required: false
+                                                    Description: 路径
+                                                    Type:
+                                                      - String
+                                                  Qualifier:
+                                                    Required: false
+                                                    Description: service 版本。
+                                                    Example: LATEST
+                                                    Type:
+                                                      - String
+                                  Enable:
+                                    Required: false
+                                    Description: 表示是否启用该触发器。
+                                    Default: true
+                                    Type:
+                                      - Boolean
+                                  InvocationRole:
+                                    Required: false
+                                    Description: 使用一个 RAM 角色的 ARN 为函数指定执行角色，事件源会使用该角色触发函数执行，请确保该角色有调用函数的权限。
+                                    Example: acs:ram::1234567890:role/fc-invoke-test
+                                    Type:
+                                      - String
+                                  Qualifier:
+                                    Required: false
+                                    Description: service 版本。
+                                    Example: LATEST
+                                    Type:
+                                      - String
+          Bootstrap:
+            Description: 启动配置
+            Required: false
+            Type:
+              - Struct:
+                  Port:
+                    Description: 启动端口
+                    Required: false
+                    Type:
+                      - Number
+                  Start:
+                    Description: 启动指令
+                    Required: false
+                    Type:
+                      - String
+

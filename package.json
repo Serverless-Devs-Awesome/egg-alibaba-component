@@ -1,0 +1,44 @@
+{
+  "name": "@serverless-devs/egg-alibaba",
+  "version": "0.0.24",
+  "description": "Serverless Devs Tool Egg.JS Framework Component For Alibaba Cloud",
+  "keywords": [
+    "Serverless",
+    "Framework",
+    "Serverless-Devs",
+    "Serverless-Tool",
+    "Egg.JS"
+  ],
+  "homepage": "https://www.serverlessfans.com",
+  "author": "Serverless-Devs",
+  "contributors": [
+    "Shoushuai Wang",
+    "Anycodes"
+  ],
+  "license": "MIT",
+  "main": "./lib/index.js",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "scripts": {
+    "watch": "tsc -w -p compile.tsconfig.json",
+    "release": "tsc -p compile.tsconfig.json && cp -r ./node_modules ./src && s platform publish"
+  },
+  "dependencies": {
+    "fs-extra": "^9.0.1",
+    "string-format": "^2.0.0",
+    "@serverless-devs/s-framework": "^0.0.11"
+  },
+  "devDependencies": {
+    "@types/node": "^14.6.3",
+    "@typescript-eslint/eslint-plugin": "^3.10.0",
+    "@typescript-eslint/parser": "^3.10.0",
+    "eslint": "^7.7.0",
+    "ts-node": "^8.10.2",
+    "typescript": "^3.9.7"
+  }
+}
