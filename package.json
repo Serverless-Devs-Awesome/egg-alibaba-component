@@ -1,6 +1,6 @@
 {
   "name": "@serverless-devs/egg-alibaba",
-  "version": "0.0.27",
+  "version": "0.0.28",
   "description": "Serverless Devs Tool Egg.JS Framework Component For Alibaba Cloud",
   "keywords": [
     "Serverless",
@@ -22,7 +22,7 @@
   },
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/ServerlessTool/egg-alibaba"
   },
   "scripts": {
     "watch": "tsc -w -p compile.tsconfig.json",
