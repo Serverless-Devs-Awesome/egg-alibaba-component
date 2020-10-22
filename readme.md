@@ -138,7 +138,7 @@ EggComponent:
 | 参数名 |  必填|  类型|  参数描述 | 
 | --- |  --- |  --- |  --- | 
 | Region | true | Enum | 地域 |
-| Log | false | Struct | log配置，function产生的log会写入这里配置的logstore |
+| Log | false | String/Struct | log配置，function产生的log会写入这里配置的logstore |
 | CodeUri | false(默认为./) | String/Struct | 代码位置 |
 | Environment | false | Struct | 环境变量 |
 | Domains | false | Struct/<Struct>List | 自定义域名配置 |
@@ -149,7 +149,9 @@ EggComponent:
 
 参数取值：`cn-beijing`, `cn-hangzhou`, `cn-shanghai`, `cn-qingdao`, `cn-zhangjiakou`, `cn-huhehaote`, `cn-shenzhen`, `cn-chengdu`, `cn-hongkong`, `ap-southeast-1`, `ap-southeast-2`, `ap-southeast-3`, `ap-southeast-5`, `ap-northeast-1`, `eu-central-1`, `eu-west-1`, `us-west-1`, `us-east-1`, `ap-south-1`
 
-#### Log
+##### Log
+
+如果是String类型，可以直接写Auto，如果是Struct类型：
 
 | 参数名 |  必填|  类型|  参数描述 | 
 | --- |  --- |  --- |  --- | 
@@ -227,7 +229,9 @@ EggComponent:
 | Nas | false | Struct |  NAS配置, 配置后function可以访问指定NAS |
 | Tag | false | <Struct>List | 标签 |
 
-###### Vpc
+##### Vpc
+
+如果是String类型，可以直接写Auto，如果是Struct类型：
 
 | 参数名 |  必填|  类型|  参数描述 | 
 | --- |  --- |  --- |  --- | 
@@ -235,7 +239,19 @@ EggComponent:
 | VSwitchIds | false | String | 一个或多个VSwitch ID |
 | VpcId | false | String | VPC ID |
 
-###### Nas
+##### Vpc
+
+如果是String类型，可以直接写Auto，如果是Struct类型：
+
+| 参数名 |  必填|  类型|  参数描述 | 
+| --- |  --- |  --- |  --- | 
+| SecurityGroupId | false | String | 安全组ID |
+| VSwitchIds | false | String | 一个或多个VSwitch ID |
+| VpcId | false | String | VPC ID |
+
+##### Nas
+
+如果是String类型，可以直接写Auto，如果是Struct类型：
 
 | 参数名 |  必填|  类型|  参数描述 | 
 | --- |  --- |  --- |  --- | 
@@ -248,8 +264,11 @@ EggComponent:
 
 | 参数名 |  必填|  类型|  参数描述 | 
 | --- |  --- |  --- |  --- | 
-| ServerAddr | false | String |  NAS 服务器地址 |
-| MountDir | false | String | 本地挂载目录 |
+| Alias | false | String |  针对组件生效的别名（和线上资源无关） |
+| NasAddr | false | String |  NAS 服务器地址 |
+| NasDir | false | String | NAS目录 |
+| FcDir | false | String | 函数计算目录 |
+| LocalDir | false | String | 本地目录 |
 
 ###### Tag
 

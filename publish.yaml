@@ -2,7 +2,7 @@ Type: Component
 Name: egg
 Provider:
   - Alibaba
-Version: 0.0.32
+Version: 0.0.34
 Description: 阿里云Egg.JS组件，帮助您快速部署Egg.JS项目
 HomePage: https://www.aliyun.com/
 Tags:
@@ -47,7 +47,9 @@ Properties:
     Required: false
     Description: log配置，function产生的log会写入这里配置的logstore
     Type:
-      - Struct:
+      - Enum[简单配置]:
+          - Auto
+      - Struct[详细配置]:
           LogStore:
             Required: false
             Description: loghub中的logstore名称
@@ -63,8 +65,8 @@ Properties:
     Default: ./
     Description: 代码位置
     Type:
-      - String
-      - Struct:
+      - String[简单配置]
+      - Struct[OSS部署]:
           Bucket:
             Required: false
             Description: function code包的bucket name
@@ -75,17 +77,7 @@ Properties:
             Description: code zip包的object name
             Type:
               - String
-          Exclude:
-            Required: false
-            Description: 除去路径
-            Type:
-              - <String>List
-          Include:
-            Required: false
-            Description: 包括路径
-            Type:
-              - <String>List
-      - Struct:
+      - Struct[OSS上传部署]:
           Bucket:
             Required: false
             Description: function code包的bucket name
@@ -98,14 +90,14 @@ Properties:
               - String
           Exclude:
             Required: false
-            Description: 除去路径
+            Description: 本地路径
             Type:
-              - <String>List
+              - List<String>
           Include:
             Required: false
-            Description: 包括路径
+            Description: 本地路径
             Type:
-              - <String>List
+              - List<String>
   Environment:
     Required: false
     Description: 环境变量
@@ -116,13 +108,13 @@ Properties:
     Required: false
     Description: 自定义域名配置。
     Type:
-      - Struct:
+      - List<Struct>[自动配置]:
           Domain:
             equired: true
             Description: 域名
             Type:
               - String
-      - <Struct>List:
+      - List<Struct>[自定义配置]:
           Domain:
             equired: true
             Description: 域名
@@ -178,16 +170,16 @@ Properties:
       - Struct:
           Service:
             Description: 服务
-            Required: false
+            Required: true
             Type:
               - Struct:
                   Name:
-                    Required: false
+                    Required: true
                     Description: service名称
                     Type:
                       - String
                   Description:
-                    Required: false
+                    Required: true
                     Description: service的简短描述
                     Type:
                       - String
@@ -199,14 +191,26 @@ Properties:
                   Role:
                     Required: false
                     Description: 授予函数计算所需权限的RAM role, 使用场景包含 1. 把 function产生的 log 发送到用户的 logstore 中 2. 为function 在执行中访问其它云资源生成 token
-                    Example: "acs:ram::1234567890:role/fc-test"
                     Type:
-                      - String
+                      - String[简单配置]
+                      - Struct[详细配置]:
+                          Name:
+                            Required: true
+                            Description: 角色名
+                            Type:
+                              - String
+                          Policies:
+                            Required: true
+                            Description: 策略列表
+                            Type:
+                              - List<String>
                   Vpc:
                     Required: false
                     Description: vpc配置, 配置后function可以访问指定VPC
                     Type:
-                      - Struct:
+                      - Enum[简单配置]:
+                          - Auto
+                      - Struct[详细配置]:
                           SecurityGroupId:
                             Required: false
                             Description: 安全组ID
@@ -216,7 +220,7 @@ Properties:
                             Required: false
                             Description: 一个或多个VSwitch ID
                             Type:
-                              - <String>List
+                              - List<String>
                           VpcId:
                             Required: false
                             Description: VPC ID
@@ -226,7 +230,9 @@ Properties:
                     Required: false
                     Description: NAS配置, 配置后function可以访问指定NAS
                     Type:
-                      - Struct:
+                      - Enum[简单配置]:
+                          - Auto
+                      - Struct[详细配置]:
                           UserId:
                             Required: false
                             Description: userID
@@ -241,35 +247,50 @@ Properties:
                             Required: false
                             Description: 挂载点
                             Type:
-                              - <Struct>List:
-                                  ServerAddr:
+                              - List<Struct>:
+                                  Alias:
+                                    Required: false
+                                    Description: 针对组件生效的别名
+                                    Type:
+                                      - String
+                                  NasAddr:
                                     Required: false
                                     Description: NAS 服务器地址
                                     Type:
                                       - String
-                                  MountDir:
+                                  NasDir:
                                     Required: false
-                                    Description: 本地挂载目录
+                                    Description: NAS目录
+                                    Type:
+                                      - String
+                                  FcDir:
+                                    Required: false
+                                    Description: 函数计算目录
+                                    Type:
+                                      - String
+                                  LocalDir:
+                                    Required: false
+                                    Description: 本地目录
                                     Type:
                                       - String
                   Tag:
                     Required: false
-                    Description: 标签内容
+                    Description: 标签配置
                     Type:
-                      - <Struct>List:
+                      - List<Struct>:
                           Key:
-                            Required: false
+                            Required: true
                             Description: 标签名
                             Type:
                               - String
                           Value:
-                            Required: false
+                            Required: true
                             Description: 标签值
                             Type:
                               - String
           Function:
             Description: 函数
-            Required: false
+            Required: true
             Type:
               - Struct:
                   Name:
@@ -282,18 +303,24 @@ Properties:
                     Description: function的简短描述
                     Type:
                       - String
+                  Handler:
+                    Required: false
+                    Default: index.handler
+                    Description: function执行的入口，具体格式和语言相关
+                    Type:
+                      - String
                   MemorySize:
                     Required: false
                     Default: 512
                     Description: function的内存规格
                     Type:
-                      - String
+                      - Number
                   Timeout:
                     Required: false
                     Default: 60
                     Description: function运行的超时时间
                     Type:
-                      - String
+                      - Number
                   Triggers:
                     Required: false
                     Description: 触发器
@@ -313,14 +340,14 @@ Properties:
                                     Required: true
                                     Description:  鉴权类型，可选值：ANONYMOUS、FUNCTION。
                                     Type:
-                                      - <Enum>List:
+                                      - Enum:
                                           - ANONYMOUS
                                           - FUNCTION
                                   Methods:
                                     Required: true
                                     Description:  HTTP 触发器支持的访问方法.
                                     Type:
-                                      - <Enum>List:
+                                      - Enum:
                                           - GET
                                           - POST
                                           - PUT
@@ -330,13 +357,13 @@ Properties:
                                     Required: false
                                     Description: 自定义域名配置。
                                     Type:
-                                      - Struct:
+                                      - List<Struct>[自动配置]:
                                           Domain:
                                             equired: true
                                             Description: 域名
                                             Type:
                                               - String
-                                      - <Struct>List:
+                                      - List<Struct>[自定义配置]:
                                           Domain:
                                             equired: true
                                             Description: 域名
@@ -346,7 +373,7 @@ Properties:
                                             Required: true
                                             Description: 协议
                                             Type:
-                                              - <Enum>List:
+                                              - List<Enum>:
                                                   - HTTP
                                                   - HTTPS
                                           CertConfig:
@@ -373,7 +400,7 @@ Properties:
                                             Required: false
                                             Description: 路径配置。
                                             Type:
-                                              - <Struct>List:
+                                              - List<Struct>:
                                                   Path:
                                                     Required: false
                                                     Description: 路径
