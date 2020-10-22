@@ -2,7 +2,7 @@ Type: Component
 Name: egg
 Provider:
   - Alibaba
-Version: 0.0.36
+Version: 0.0.40
 Description: 阿里云Egg.JS组件，帮助您快速部署Egg.JS项目
 HomePage: https://www.aliyun.com/
 Tags:
@@ -241,6 +241,24 @@ Properties:
                     Type:
                       - Enum[简单配置]:
                           - Auto
+                      - Struct[半自动配置]:
+                          Type:
+                            Required: true
+                            Description: 自动化配置
+                            Type:
+                              - Enum:
+                                  - Auto
+                          FcDir:
+                            Required: false
+                            Description: 函数计算目录
+                            Type:
+                              - String
+                          LocalDir:
+                            Required: false
+                            Description: 本地目录
+                            Type:
+                              - String[单一目录]
+                              - List<String>[多目录配置]
                       - Struct[详细配置]:
                           UserId:
                             Required: false
@@ -281,7 +299,8 @@ Properties:
                                     Required: false
                                     Description: 本地目录
                                     Type:
-                                      - String
+                                      - String[单一目录]
+                                      - List<String>[多目录配置]
                   Tag:
                     Required: false
                     Description: 标签配置

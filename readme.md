@@ -229,15 +229,6 @@ EggComponent:
 | Nas | false | Struct |  NAS配置, 配置后function可以访问指定NAS |
 | Tag | false | <Struct>List | 标签 |
 
-##### Vpc
-
-如果是String类型，可以直接写Auto，如果是Struct类型：
-
-| 参数名 |  必填|  类型|  参数描述 | 
-| --- |  --- |  --- |  --- | 
-| SecurityGroupId | false | String | 安全组ID |
-| VSwitchIds | false | String | 一个或多个VSwitch ID |
-| VpcId | false | String | VPC ID |
 
 ##### Vpc
 
@@ -251,24 +242,36 @@ EggComponent:
 
 ##### Nas
 
+
 如果是String类型，可以直接写Auto，如果是Struct类型：
 
-| 参数名 |  必填|  类型|  参数描述 | 
-| --- |  --- |  --- |  --- | 
-| UserId | false | String | userID |
-| GroupId | false | String | groupID |
-| MountPoints | false | <Struct>List | 挂载点 |
+- 
+
+    | 参数名 |  必填|  类型|  参数描述 | 
+    | --- |  --- |  --- |  --- | 
+    | Type | true | String | 只可填写Auto |
+    | FcDir | false | String | 函数计算目录 |
+    | LocalDir | false | List<String>/String  | 本地目录 |
+
+- 
+
+    | 参数名 |  必填|  类型|  参数描述 | 
+    | --- |  --- |  --- |  --- | 
+    | UserId | false | String | userID |
+    | GroupId | false | String | groupID |
+    | MountPoints | false | <Struct>List | 挂载点 |
+    
+   其中MountPoints为：
+    
+    | 参数名 |  必填|  类型|  参数描述 | 
+    | --- |  --- |  --- |  --- | 
+    | Alias | false | String |  针对组件生效的别名（和线上资源无关） |
+    | NasAddr | false | String |  NAS 服务器地址 |
+    | NasDir | false | String | NAS目录 |
+    | FcDir | false | String | 函数计算目录 |
+    | LocalDir | false | String | 本地目录 |
 
 
-其中MountPoints为：
-
-| 参数名 |  必填|  类型|  参数描述 | 
-| --- |  --- |  --- |  --- | 
-| Alias | false | String |  针对组件生效的别名（和线上资源无关） |
-| NasAddr | false | String |  NAS 服务器地址 |
-| NasDir | false | String | NAS目录 |
-| FcDir | false | String | 函数计算目录 |
-| LocalDir | false | String | 本地目录 |
 
 ###### Tag
 
