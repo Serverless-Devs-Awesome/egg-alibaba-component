@@ -1,6 +1,6 @@
 {
   "name": "@serverless-devs/egg-alibaba",
-  "version": "0.0.34",
+  "version": "0.0.35",
   "description": "Serverless Devs Tool Egg.JS Framework Component For Alibaba Cloud",
   "keywords": [
     "Serverless",
