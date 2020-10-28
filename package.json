@@ -1,6 +1,6 @@
 {
   "name": "@serverless-devs/egg-alibaba",
-  "version": "0.0.44",
+  "version": "0.0.45",
   "description": "Serverless Devs Tool Egg.JS Framework Component For Alibaba Cloud",
   "keywords": [
     "Serverless",
@@ -26,6 +26,7 @@
   },
   "scripts": {
     "watch": "tsc -w -p compile.tsconfig.json",
+    "cd": "npm install --production && tsc -p compile.tsconfig.json && cp -r ./node_modules ./src",
     "release": "npm install --production && tsc -p compile.tsconfig.json && cp -r ./node_modules ./src && s platform publish"
   },
   "dependencies": {
