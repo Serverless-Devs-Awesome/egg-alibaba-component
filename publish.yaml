@@ -2,10 +2,11 @@ Type: Component
 Name: egg
 Provider:
   - Alibaba
-Version: 0.0.43
+Version: 0.0.44
 Description: 阿里云Egg.JS组件，帮助您快速部署Egg.JS项目
 HomePage: https://www.aliyun.com/
 Tags:
+  - Egg
   - 函数计算
 Category: 基础云服务
 Commands:
